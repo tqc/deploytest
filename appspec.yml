@@ -1,7 +1,8 @@
 version: 0.0
 os: linux
 files:
-    destination: /apps/deploytest
+    - source: /
+      destination: /apps/deploytest
 hooks:
   BeforeInstall:
     - location: deployment/index.js
