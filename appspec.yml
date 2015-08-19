@@ -1,0 +1,16 @@
+os: linux
+files:
+    destination: /apps/deploytest
+hooks:
+  BeforeInstall:
+    - location: deployment/index.js
+      timeout: 180
+  AfterInstall:
+    - location: deployment/index.js
+      timeout: 180
+  ApplicationStart:
+    - location: deployment/index.js
+      timeout: 180
+  ValidateService:
+    - location: deployment/index.js
+      timeout: 180
