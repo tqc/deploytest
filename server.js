@@ -5,7 +5,7 @@ var http = require('http');
 const PORT = 5000;
 
 function handleRequest(request, response) {
-    response.end('It Works!! Path Hit: ' + request.url);
+    response.end('It Works with updated server!! Path Hit: ' + request.url);
 }
 
 //Create a server
