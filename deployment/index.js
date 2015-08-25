@@ -36,12 +36,10 @@ else if (process.env.LIFECYCLE_EVENT == "AfterInstall") {
     fs.writeFileSync(confpath, conf);
 
     // start node server
-    var spawn = require("child_process").spawn;
-    spawn("/usr/local/bin/node", ["/apps/deploytest/server.js"], {
-        detached: true
-    });
+   
+    child.exec("/usr/local/bin/node /apps/deploytest/server.js > /dev/null 2> /dev/null < /dev/null &", {});
 
     // restart nginx
-    spawn("/etc/init.d/nginx", ["reload"], {});
+    child.spawn("/etc/init.d/nginx", ["reload"], {});
 
 }
