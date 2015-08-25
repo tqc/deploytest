@@ -1,5 +1,7 @@
 #!/usr/local/bin/node
 
+"use strict";
+
 console.log(process.env.LIFECYCLE_EVENT);
 var child = require("child_process");
 
