@@ -4,6 +4,9 @@ files:
     - source: /
       destination: /apps/deploytest
 hooks:
+  ApplicationStop:
+    - location: deployment/index.js
+      timeout: 180
   BeforeInstall:
     - location: deployment/index.js
       timeout: 180
