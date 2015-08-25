@@ -6,7 +6,8 @@ console.log(process.env.LIFECYCLE_EVENT);
 var child = require("child_process");
 
 function getPid(port) {
-    let ns = child.execSync("netstat", ["-lnp"], {encoding: "utf-8"});
+    console.log("getting pid for port " + port);
+    let ns = child.execSync("netstat -lnp", {encoding: "utf-8", timeout: 500});
     var lines = ns.split("\n");
     for (let i = 0; i < lines.length; i++) {
         var line = lines[i];
@@ -19,6 +20,7 @@ function getPid(port) {
 if (process.env.LIFECYCLE_EVENT == "ApplicationStop") {
     var pid = getPid(5000);
     if (pid) {
+        console.log("process " + pid + "is listening on port " + 5000);
         child.execSync("kill", [pid]);
     }
 }
