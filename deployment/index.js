@@ -14,7 +14,7 @@ if (process.env.LIFECYCLE_EVENT == "AfterInstall") {
     fs.writeFileSync(confpath, conf);
 
     // start node server
-    var spawn = require("child-process").spawn;
+    var spawn = require("child_process").spawn;
     spawn("/usr/local/bin/node", ["/apps/deploytest/server.js"], {
         detached: true
     });
