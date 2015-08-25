@@ -18,10 +18,15 @@ function getPid(port) {
 }
 
 if (process.env.LIFECYCLE_EVENT == "ApplicationStop") {
-    var pid = getPid(5000);
-    if (pid) {
-        console.log("process " + pid + "is listening on port " + 5000);
-        child.execSync("kill", [pid]);
+    try {
+        var pid = getPid(5000);
+        if (pid) {
+            console.log("process " + pid + "is listening on port " + 5000);
+            child.execSync("kill " + pid);
+        }
+    } catch(ex) {
+        console.log(ex);
+        // ignore errors in application stop
     }
 }
 else if (process.env.LIFECYCLE_EVENT == "AfterInstall") {
