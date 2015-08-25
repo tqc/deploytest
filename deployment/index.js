@@ -19,7 +19,7 @@ function getPid(port) {
 if (process.env.LIFECYCLE_EVENT == "ApplicationStop") {
     var pid = getPid(5000);
     if (pid) {
-        child.execSync("kill", ["pid"]);
+        child.execSync("kill", [pid]);
     }
 }
 else if (process.env.LIFECYCLE_EVENT == "AfterInstall") {
