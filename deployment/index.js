@@ -36,7 +36,6 @@ else if (process.env.LIFECYCLE_EVENT == "AfterInstall") {
     fs.writeFileSync(confpath, conf);
 
     // start node server
-   
     child.exec("/usr/local/bin/node /apps/deploytest/server.js > /dev/null 2> /dev/null < /dev/null &", {});
 
     // restart nginx
