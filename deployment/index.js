@@ -1,8 +1,26 @@
 #!/usr/local/bin/node
 
 console.log(process.env.LIFECYCLE_EVENT);
+var child = require("child_process");
 
-if (process.env.LIFECYCLE_EVENT == "AfterInstall") {
+function getPid(port) {
+    let ns = child.execSync("netstat", ["-lnp"], {encoding: "utf-8"});
+    var lines = ns.split("\n");
+    for (let i = 0; i < lines.length; i++) {
+        var line = lines[i];
+        if (line.indexOf(":" + port) < 0) continue;
+        var m = line.match(/(\d+)\/node/);
+        if (m) return m[1];
+    }
+}
+
+if (process.env.LIFECYCLE_EVENT == "ApplicationStop") {
+    var pid = getPid(5000);
+    if (pid) {
+        child.execSync("kill", ["pid"]);
+    }
+}
+else if (process.env.LIFECYCLE_EVENT == "AfterInstall") {
     // write nginx config
 
     var fs = require("fs");
