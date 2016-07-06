@@ -2,7 +2,7 @@
     "author": "Tom Clarkson",
     "name": "deploytest",
     "description": "Testing code deployment",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "repository": {
         "url": "http://github.com/tqc/deploytest"
     },
@@ -10,7 +10,7 @@
         "test": "eslint . && mocha"
     },
     "dependencies": {
-        "codedeploy-scripts": "^0.0.5"
+        "codedeploy-scripts": "^0.0.6"
     },
     "devDependencies": {
         "babel-eslint": "*",
