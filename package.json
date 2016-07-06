@@ -10,6 +10,7 @@
         "test": "eslint . && mocha"
     },
     "dependencies": {
+        "codedeploy-scripts": "^0.0.5"
     },
     "devDependencies": {
         "babel-eslint": "*",

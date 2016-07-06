@@ -1,49 +1,15 @@
 #!/usr/local/bin/node
 
-"use strict";
+var SimpleDeployment = require("codedeploy-scripts").SimpleDeployment;
 
-console.log(process.env.LIFECYCLE_EVENT);
-var child = require("child_process");
+var deployment = new SimpleDeployment({
+    appName: "deploytest",
+    nodePort: "5000",
+    serverScript: "server.js",
+    domains: "deploytest.orangeguava.com",
+    buildFolder: "built",
+    secretBucket: ""
+});
 
-function getPid(port) {
-    console.log("getting pid for port " + port);
-    let ns = child.execSync("netstat -lnp", {encoding: "utf-8", timeout: 500});
-    var lines = ns.split("\n");
-    for (let i = 0; i < lines.length; i++) {
-        var line = lines[i];
-        if (line.indexOf(":" + port) < 0) continue;
-        var m = line.match(/(\d+)\/node/);
-        if (m) return m[1];
-    }
-}
+deployment.run();
 
-if (process.env.LIFECYCLE_EVENT == "ApplicationStop") {
-    try {
-        var pid = getPid(5000);
-        if (pid) {
-            console.log("process " + pid + "is listening on port " + 5000);
-            child.execSync("kill " + pid);
-        }
-    } catch(ex) {
-        console.log(ex);
-        // ignore errors in application stop
-    }
-}
-else if (process.env.LIFECYCLE_EVENT == "AfterInstall") {
-    // write nginx config
-
-    var fs = require("fs");
-
-    var conf = fs.readFileSync(__dirname + "/nginx-app.conf", "utf-8");
-
-    var confpath = "/etc/nginx/conf.d/deploytest.conf";
-
-    fs.writeFileSync(confpath, conf);
-
-    // start node server
-    child.exec("/usr/local/bin/node /apps/deploytest/server.js > /dev/null 2> /dev/null < /dev/null &", {});
-
-    // restart nginx
-    child.spawn("/etc/init.d/nginx", ["reload"], {});
-
-}
